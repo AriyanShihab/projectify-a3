@@ -21,7 +21,7 @@ function projectReducer(projectState, action) {
 
     case "REMOVE_PROJECT":
       return {
-        projectData: projectState.filter(
+        projectData: projectState.projectData.filter(
           (project) => project.id !== action.payload.id
         ),
       };
