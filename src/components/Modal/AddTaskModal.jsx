@@ -33,12 +33,12 @@ export default function AddTaskModal({ editData, onClose }) {
           ...task,
         },
       });
+      onClose();
+
       return toast.warn("Project Edited successfully", {
         position: "bottom-center",
         theme: "dark",
       });
-
-     
     } else {
       dispatch({
         type: "ADD_PROJECT",
@@ -47,13 +47,13 @@ export default function AddTaskModal({ editData, onClose }) {
           id: crypto.randomUUID(),
         },
       });
-      toast.success("Project added successfully", {
+      onClose();
+
+      return toast.success("Project added successfully", {
         position: "bottom-center",
         theme: "dark",
       });
     }
-
-    onClose();
   }
 
   return (

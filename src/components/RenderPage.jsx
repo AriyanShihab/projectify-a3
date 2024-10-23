@@ -11,24 +11,14 @@ import { ProjectContext } from "../context/index";
 
 export default function RenderPage() {
   const [project, dispatch] = useReducer(projectReducer, initialState);
+  // sort data based on the date for display letest at the top
+  const sortedData = project.projectData.sort(function (a, b) {
+    return new Date(b.date) - new Date(a.date);
+  });
 
-  function filterData() {
-    const allTodo = project.projectData.filter((pr) => pr.category === "todo");
-    const allInProgress = project.projectData.filter(
-      (pr) => pr.category === "inProgress"
-    );
-    const allDone = project.projectData.filter((pr) => pr.category === "done");
-    const allRevised = project.projectData.filter(
-      (pr) => pr.category === "revised"
-    );
+ 
 
-    return {
-      allTodo,
-      allInProgress,
-      allDone,
-      allRevised,
-    };
-  }
+  function sortProjectOnClick(whereToPerform) {}
 
   return (
     <div className="flex h-screen relative">
@@ -40,10 +30,10 @@ export default function RenderPage() {
             <Title />
           </div>
           <div className=" mx-1 flex  px-2">
-            <Todo data={filterData().allTodo} />
-            <OnProgres data={filterData().allInProgress} />
-            <Done data={filterData().allDone} />
-            <Revised data={filterData().allRevised} />
+            <Todo data={sortedData} />
+            <OnProgres data={sortedData} />
+            <Done data={sortedData} />
+            <Revised data={sortedData} />
           </div>
         </main>
       </ProjectContext.Provider>
