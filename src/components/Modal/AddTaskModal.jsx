@@ -1,15 +1,18 @@
 import React, { useState, useContext } from "react";
 import { ProjectContext } from "../../context/index";
+import { toast } from "react-toastify";
 
-export default function AddTaskModal({ onClose }) {
+export default function AddTaskModal({ editData, onClose }) {
   const { project, dispatch } = useContext(ProjectContext);
 
-  const [task, setTask] = useState({
-    projectName: "",
-    description: "",
-    date: "",
-    category: "",
-  });
+  const [task, setTask] = useState(
+    editData || {
+      projectName: "",
+      description: "",
+      date: "",
+      category: "",
+    }
+  );
 
   // handlers
   function handleInputChane(event) {
@@ -23,13 +26,32 @@ export default function AddTaskModal({ onClose }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    dispatch({
-      type: "ADD_PROJECT",
-      payload: {
-        ...task,
-        id: crypto.randomUUID(),
-      },
-    });
+    if (editData) {
+      dispatch({
+        type: "EDIT_PROJECT",
+        payload: {
+          ...task,
+        },
+      });
+      return toast.warn("Project Edited successfully", {
+        position: "bottom-center",
+        theme: "dark",
+      });
+
+     
+    } else {
+      dispatch({
+        type: "ADD_PROJECT",
+        payload: {
+          ...task,
+          id: crypto.randomUUID(),
+        },
+      });
+      toast.success("Project added successfully", {
+        position: "bottom-center",
+        theme: "dark",
+      });
+    }
 
     onClose();
   }

@@ -11,7 +11,7 @@ function projectReducer(projectState, action) {
       break;
     case "EDIT_PROJECT":
       return {
-        projectData: projectState.map((project) => {
+        projectData: projectState.projectData.map((project) => {
           if (project.id === action.payload.id) {
             return action.payload;
           } else return project;
