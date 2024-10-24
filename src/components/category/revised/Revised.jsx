@@ -21,7 +21,7 @@ export default function Revised({ data }) {
           <h3 className="text-lg font-semibold">
             Revise ({filteredData.length})
           </h3>
-          <button onClick={() => setOrder(!order)}>
+          <button className="p-2 rounded-md shadow-sm bg-slate-100 bg-opacity-20" onClick={() => setOrder(!order)}>
             <SortingIcon />
           </button>
         </div>

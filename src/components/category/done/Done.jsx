@@ -19,7 +19,7 @@ export default function Done({ data }) {
           <h3 className="text-lg font-semibold">
             Done ({filteredData.length})
           </h3>
-          <button onClick={() => setOrder(!order)}>
+          <button className="p-2 rounded-md shadow-sm bg-slate-100 bg-opacity-30" onClick={() => setOrder(!order)}>
             <SortingIcon />
           </button>
         </div>

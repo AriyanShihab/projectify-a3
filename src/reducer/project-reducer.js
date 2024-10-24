@@ -1,5 +1,6 @@
 const initialState = {
   projectData: [],
+  searchBackup: [],
 };
 
 function projectReducer(projectState, action) {
@@ -12,23 +13,49 @@ function projectReducer(projectState, action) {
 
       return {
         projectData: sortedProjectData,
+        searchBackup: sortedProjectData,
       };
     }
-    case "EDIT_PROJECT":
+    case "EDIT_PROJECT": {
+      let nextState = projectState.projectData.map((project) => {
+        if (project.id === action.payload.id) {
+          return action.payload;
+        } else return project;
+      });
       return {
-        projectData: projectState.projectData.map((project) => {
-          if (project.id === action.payload.id) {
-            return action.payload;
-          } else return project;
-        }),
+        projectData: nextState,
+        searchBackup: nextState,
       };
+    }
 
-    case "REMOVE_PROJECT":
+    case "REMOVE_PROJECT": {
+      let nextState = projectState.projectData.filter(
+        (project) => project.id !== action.payload.id
+      );
       return {
-        projectData: projectState.projectData.filter(
-          (project) => project.id !== action.payload.id
-        ),
+        projectData: nextState,
+        searchBackup: nextState,
       };
+    }
+    case "SEARCH": {
+      let searchQuery = action.searchQuery;
+      console.log(searchQuery, "search query we got");
+
+      if (searchQuery.length > 0) {
+        let nextProjects = [...projectState.searchBackup].filter((project) =>
+          project?.projectName?.toLowerCase().includes(searchQuery)
+        );
+        return {
+          ...projectState,
+          projectData: nextProjects,
+        };
+      } else {
+        return {
+          ...projectState,
+          projectData: projectState.searchBackup,
+        };
+      }
+    }
 
     default:
       return projectState;

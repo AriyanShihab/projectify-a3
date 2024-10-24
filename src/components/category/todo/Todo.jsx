@@ -6,12 +6,12 @@ import EmptyList from "../../EmptyList";
 // ---------------
 // -------
 export default function Todo() {
-  const { project, dispatch } = useContext(ProjectContext);
+  const { project } = useContext(ProjectContext);
   const [order, setOrder] = useState(true);
 
   let filteredData = project.projectData.filter((pr) => pr.category === "todo");
   if (!order) {
-    filteredData = filteredData.reverse();
+    filteredData.reverse();
   }
 
   return (
@@ -21,7 +21,7 @@ export default function Todo() {
           <h3 className="text-lg font-semibold">
             To-Do ({filteredData.length})
           </h3>
-          <button onClick={() => setOrder(!order)}>
+          <button className="p-2 rounded-md shadow-sm bg-slate-100 bg-opacity-20" onClick={() => setOrder(!order)}>
             <SortingIcon />
           </button>
         </div>

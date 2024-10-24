@@ -22,7 +22,7 @@ export default function OnProgres({ data }) {
           <h3 className="text-lg font-semibold">
             On Progress ({filteredData.length})
           </h3>
-          <button onClick={() => setOrder(!order)}>
+          <button className="p-2 rounded-md shadow-sm bg-slate-100 bg-opacity-30" onClick={() => setOrder(!order)}>
             <SortingIcon />
           </button>
         </div>
@@ -32,7 +32,7 @@ export default function OnProgres({ data }) {
           </span>
         )}
         {filteredData.length > 0 ? (
-          filteredData.map((entry) => <TaskCard id={entry.id} data={entry} headerColor={"text-yellow-500"}/>)
+          filteredData.map((entry) => <TaskCard key={entry.id} data={entry} headerColor={"text-yellow-500"}/>)
         ) : (
           <EmptyList buttonColor={"text-yellow-500"} />
         )}

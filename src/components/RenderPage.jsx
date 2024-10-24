@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import SideBar from "./sidebar/SideBar";
 import Search from "./search-box/Search";
 import Title from "./title/Title";
@@ -11,21 +11,43 @@ import { ProjectContext } from "../context/index";
 
 export default function RenderPage() {
   const [project, dispatch] = useReducer(projectReducer, initialState);
-  // sort data based on the date for display letest at the top
-  const sortedData = project.projectData.sort(function (a, b) {
+
+  const rawData = project.projectData.sort(function (a, b) {
     return new Date(b.date) - new Date(a.date);
   });
 
- 
+  const [backupSearch, setBackupSearch] = useState(rawData);
+  const [sortedData, setSortedData] = useState(rawData);
+  const [searchTerms, setSearchTerms] = useState("");
 
-  function sortProjectOnClick(whereToPerform) {}
+  function performSearch(searchQuery) {
+    setSearchTerms(searchQuery);
+   
+    if (searchQuery.length > 0) {
+      
+      let nextState = sortedData.filter((item) => {
+        console.log(item.projectName, searchQuery);
+        return item.projectName
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase());
+      });
+      console.log('next state', nextState);
+      setSortedData(nextState);
+    } else {
+      setSortedData(backupSearch);
+    }
+  }
 
   return (
     <div className="flex h-screen relative">
       <ProjectContext.Provider value={{ project, dispatch }}>
         <SideBar />
         <main className="flex-1 overflow-y-auto overflow-x-hidden">
-          <Search />
+          <Search
+            searchTerms={searchTerms}
+            setSearchTerms={setSearchTerms}
+            onInputChange={performSearch}
+          />
           <div className="mx-auto max-w-7xl p-6 ">
             <Title />
           </div>

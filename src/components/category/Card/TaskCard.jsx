@@ -5,10 +5,14 @@ import AddTaskModal from "../../Modal/AddTaskModal";
 import { ProjectContext } from "../../../context/index";
 import { toast } from "react-toastify";
 
-export default function TaskCard({ data,headerColor }) {
+
+export default function TaskCard({ data, headerColor }) {
   const { dispatch } = useContext(ProjectContext);
+  const [popup, setPopup] = useState(true);
+  const [permission, setPermission] = useState(false);
   // handele deletetion
   const handleDelete = (task) => {
+   
     let permission = window.confirm(
       "are you sure? this will delete the project entry from list!"
     );
@@ -38,9 +42,11 @@ export default function TaskCard({ data,headerColor }) {
   function handleClose() {
     setShow(false);
   }
+  
 
   return (
     <>
+     
       {show && <AddTaskModal editData={data} onClose={handleClose} />}
       <div className="mb-4 rounded-lg bg-gray-800 p-4">
         <div className="flex justify-between">
