@@ -7,17 +7,11 @@ import EmptyList from "../../EmptyList";
 // -------
 export default function Todo() {
   const { project, dispatch } = useContext(ProjectContext);
-  const filteredData = project.projectData.filter(
-    (pr) => pr.category === "todo"
-  );
+  const [order, setOrder] = useState(true);
 
-  console.log(project.projectData, "from todo");
-
-  function handleReverse() {
-    
-    dispatch({
-      type: "REVERSE_TODO",
-    });
+  let filteredData = project.projectData.filter((pr) => pr.category === "todo");
+  if (!order) {
+    filteredData = filteredData.reverse();
   }
 
   return (
@@ -27,13 +21,20 @@ export default function Todo() {
           <h3 className="text-lg font-semibold">
             To-Do ({filteredData.length})
           </h3>
-          <button onClick={handleReverse}>
+          <button onClick={() => setOrder(!order)}>
             <SortingIcon />
           </button>
         </div>
+        {filteredData.length >0 && (
+          <span className="text-base text-stone-100">
+            {order ? "*newest at top" : "*oldest at top"}
+          </span>
+        )}
         <div>
           {filteredData.length > 0 ? (
-            filteredData.map((pr) => <TaskCard key={pr.id} data={pr} />)
+            filteredData.map((pr) => (
+              <TaskCard key={pr.id} data={pr} order={order} />
+            ))
           ) : (
             <EmptyList buttonColor={"text-indigo-600"} />
           )}
