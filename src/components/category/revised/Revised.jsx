@@ -31,7 +31,9 @@ export default function Revised({ data }) {
           </span>
         )}
         {filteredData.length > 0 ? (
-          filteredData.map((pr) => <TaskCard key={pr.id} data={pr} />)
+          filteredData.map((pr) => (
+            <TaskCard key={pr.id} data={pr} headerColor={"text-rose-500"} />
+          ))
         ) : (
           <EmptyList buttonColor={"text-rose-500"} />
         )}

@@ -30,7 +30,7 @@ export default function Done({ data }) {
         )}
         <div>
           {filteredData.length > 0 ? (
-            filteredData.map((pr) => <TaskCard key={pr.id} data={pr} />)
+            filteredData.map((pr) => <TaskCard key={pr.id} data={pr}  headerColor={"text-teal-500"}/>)
           ) : (
             <EmptyList buttonColor={"text-teal-500"} />
           )}

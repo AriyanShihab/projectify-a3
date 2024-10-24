@@ -5,7 +5,7 @@ import AddTaskModal from "../../Modal/AddTaskModal";
 import { ProjectContext } from "../../../context/index";
 import { toast } from "react-toastify";
 
-export default function TaskCard({ data }) {
+export default function TaskCard({ data,headerColor }) {
   const { dispatch } = useContext(ProjectContext);
   // handele deletetion
   const handleDelete = (task) => {
@@ -44,7 +44,7 @@ export default function TaskCard({ data }) {
       {show && <AddTaskModal editData={data} onClose={handleClose} />}
       <div className="mb-4 rounded-lg bg-gray-800 p-4">
         <div className="flex justify-between">
-          <h4 className="mb-2 flex-1 font-semibold text-indigo-500">
+          <h4 className={`mb-2 flex-1 font-semibold ${headerColor}`}>
             {data.projectName}
           </h4>
           <div className="flex gap-2">

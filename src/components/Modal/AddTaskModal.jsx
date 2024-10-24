@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 
 export default function AddTaskModal({ editData, onClose }) {
   const { project, dispatch } = useContext(ProjectContext);
+  const [isFormValid, setIsFormValid] = useState(true);
+  let formValidation = true;
 
   const [task, setTask] = useState(
     editData || {
@@ -26,6 +28,32 @@ export default function AddTaskModal({ editData, onClose }) {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    const feilds = Object.keys(task);
+    let emptyFeild = [];
+    feilds.forEach((feild) => {
+      if (task[feild] === "" || task[feild] === " ") {
+        console.log(feild);
+        formValidation = false;
+        setIsFormValid(false);
+        emptyFeild.push(feild);
+      }
+    });
+    if (!formValidation) {
+      toast.warn(
+        `${
+          emptyFeild.length > 1
+            ? "there are some empty feilds, please fill those up !"
+            : `${emptyFeild[0]} is epmty, please fill it up`
+        } `,
+        {
+          theme: "dark",
+          position: "bottom-center",
+        }
+      );
+      return false;
+    }
+
     if (editData) {
       dispatch({
         type: "EDIT_PROJECT",
@@ -47,6 +75,7 @@ export default function AddTaskModal({ editData, onClose }) {
           id: crypto.randomUUID(),
         },
       });
+      setIsFormValid(true);
       onClose();
 
       return toast.success("Project added successfully", {
@@ -63,6 +92,7 @@ export default function AddTaskModal({ editData, onClose }) {
           <h2 className="mb-6 text-2xl font-bold text-green-400">
             Create Task
           </h2>
+
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
@@ -76,7 +106,7 @@ export default function AddTaskModal({ editData, onClose }) {
                 name="projectName"
                 value={task.projectName}
                 onChange={handleInputChane}
-                required
+                // required
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
@@ -92,6 +122,7 @@ export default function AddTaskModal({ editData, onClose }) {
                 name="description"
                 value={task.description}
                 onChange={handleInputChane}
+                // required
                 rows="3"
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
               ></textarea>
@@ -109,6 +140,7 @@ export default function AddTaskModal({ editData, onClose }) {
                 name="date"
                 value={task.date}
                 onChange={handleInputChane}
+                // required
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
@@ -125,6 +157,7 @@ export default function AddTaskModal({ editData, onClose }) {
                 name="category"
                 value={task.category}
                 onChange={handleInputChane}
+                // required
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="" disabled>
@@ -153,6 +186,11 @@ export default function AddTaskModal({ editData, onClose }) {
               </button>
             </div>
           </form>
+          {!isFormValid && (
+            <p className="text-green-500  text-[18px] text-center mt-3">
+              you must fill every feild to submit form
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -33,7 +33,7 @@ export default function Todo() {
         <div>
           {filteredData.length > 0 ? (
             filteredData.map((pr) => (
-              <TaskCard key={pr.id} data={pr} order={order} />
+              <TaskCard key={pr.id} data={pr} headerColor={"text-indigo-600"}/>
             ))
           ) : (
             <EmptyList buttonColor={"text-indigo-600"} />

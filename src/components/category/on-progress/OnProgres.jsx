@@ -32,7 +32,7 @@ export default function OnProgres({ data }) {
           </span>
         )}
         {filteredData.length > 0 ? (
-          filteredData.map((entry) => <TaskCard id={entry.id} data={entry} />)
+          filteredData.map((entry) => <TaskCard id={entry.id} data={entry} headerColor={"text-yellow-500"}/>)
         ) : (
           <EmptyList buttonColor={"text-yellow-500"} />
         )}
