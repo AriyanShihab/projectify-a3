@@ -2,8 +2,9 @@ import React, { useState, useContext } from "react";
 import { ProjectContext } from "../../context/index";
 import { toast } from "react-toastify";
 
+
 export default function AddTaskModal({ editData, onClose }) {
-  const { project, dispatch } = useContext(ProjectContext);
+  const {dispatch } = useContext(ProjectContext);
   const [isFormValid, setIsFormValid] = useState(true);
   let formValidation = true;
 
@@ -33,7 +34,7 @@ export default function AddTaskModal({ editData, onClose }) {
     let emptyFeild = [];
     feilds.forEach((feild) => {
       if (task[feild] === "" || task[feild] === " ") {
-        console.log(feild);
+        
         formValidation = false;
         setIsFormValid(false);
         emptyFeild.push(feild);
@@ -187,7 +188,7 @@ export default function AddTaskModal({ editData, onClose }) {
             </div>
           </form>
           {!isFormValid && (
-            <p className="text-green-500  text-[18px] text-center mt-3">
+            <p className="text-rose-500  text-[18px] text-center mt-3">
               you must fill every feild to submit form
             </p>
           )}

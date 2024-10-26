@@ -31,7 +31,7 @@ export default function RenderPage() {
           .toLowerCase()
           .includes(searchQuery.toLowerCase());
       });
-      console.log('next state', nextState);
+      
       setSortedData(nextState);
     } else {
       setSortedData(backupSearch);

@@ -1,40 +1,60 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
+import { toast } from "react-toastify";
+import { ProjectContext } from "../../../context/index";
 import DeleteIcon from "../../../global-icons/DeleteIcon";
 import EditIcon from "../../../global-icons/EditIcon";
 import AddTaskModal from "../../Modal/AddTaskModal";
-import { ProjectContext } from "../../../context/index";
-import { toast } from "react-toastify";
-
+import ConfirmationPopup from "../../Modal/ConfirmPopup";
 
 export default function TaskCard({ data, headerColor }) {
   const { dispatch } = useContext(ProjectContext);
-  const [popup, setPopup] = useState(true);
+  const [popup, setPopup] = useState(false);
   const [permission, setPermission] = useState(false);
   // handele deletetion
-  const handleDelete = (task) => {
-   
-    let permission = window.confirm(
-      "are you sure? this will delete the project entry from list!"
-    );
-    if (permission) {
-      dispatch({
-        type: "REMOVE_PROJECT",
-        payload: {
-          ...task,
-        },
-      });
-      toast.warn("Deletetion Success", {
-        position: "bottom-center",
-      });
-    } else {
-      toast.info("Entry is not deleted, Thank you", {
-        position: "bottom-center",
-      });
-    }
+  const handleDelete = () => {
+    setPopup(true);
+
+    // let permission = window.confirm(
+    //   "are you sure? this will delete the project entry from list!"
+    // );
+    // if (permission) {
+    //   dispatch({
+    //     type: "REMOVE_PROJECT",
+    //     payload: {
+    //       ...task,
+    //     },
+    //   });
+    //   toast.warn("Deletetion Success", {
+    //     position: "bottom-center",
+    //   });
+    // } else {
+    //   toast.success("Entry is not deleted, Thank you", {
+    //     position: "bottom-center",
+    //   });
+    // }
   };
+
+  function handleYes() {
+    dispatch({
+      type: "REMOVE_PROJECT",
+      payload: {
+        ...data,
+      },
+    });
+    toast.warn("Deletetion Success", {
+      position: "bottom-center",
+      theme: "dark",
+    });
+    setPopup(false);
+  }
+  function handleNo() {
+    toast.success("Entry is not deleted, Thank you", {
+      position: "bottom-center",
+    });
+    setPopup(false);
+  }
   // handle Edit
   const [show, setShow] = useState(false);
-  const [selectedData, setSelectedData] = useState({});
 
   const handleEdit = (task) => {
     setShow(true);
@@ -42,11 +62,12 @@ export default function TaskCard({ data, headerColor }) {
   function handleClose() {
     setShow(false);
   }
-  
 
   return (
     <>
-     
+      {popup && (
+        <ConfirmationPopup onPermission={handleYes} onDecline={handleNo} />
+      )}
       {show && <AddTaskModal editData={data} onClose={handleClose} />}
       <div className="mb-4 rounded-lg bg-gray-800 p-4">
         <div className="flex justify-between">
