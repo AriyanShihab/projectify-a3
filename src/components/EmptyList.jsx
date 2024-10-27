@@ -9,7 +9,7 @@ export default function EmptyList({ buttonColor }) {
   return (
     <>
       {showModal && <AddTaskModal onClose={handleClose} />}
-      <div className="bg-slate-900 m-2 p-2 rounded-lg text-slate-400 text-base text-center ">
+      <div className="bg-slate-900 m-2  rounded-lg text-slate-400 text-base text-center border p-3">
         <h3>There is No Project At this Momment</h3>
         <button
           onClick={() => setShowModal(true)}

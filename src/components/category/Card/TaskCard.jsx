@@ -13,25 +13,6 @@ export default function TaskCard({ data, headerColor }) {
   // handele deletetion
   const handleDelete = () => {
     setPopup(true);
-
-    // let permission = window.confirm(
-    //   "are you sure? this will delete the project entry from list!"
-    // );
-    // if (permission) {
-    //   dispatch({
-    //     type: "REMOVE_PROJECT",
-    //     payload: {
-    //       ...task,
-    //     },
-    //   });
-    //   toast.warn("Deletetion Success", {
-    //     position: "bottom-center",
-    //   });
-    // } else {
-    //   toast.success("Entry is not deleted, Thank you", {
-    //     position: "bottom-center",
-    //   });
-    // }
   };
 
   function handleYes() {
@@ -41,15 +22,16 @@ export default function TaskCard({ data, headerColor }) {
         ...data,
       },
     });
-    toast.warn("Deletetion Success", {
+    toast.success("Deletetion Success", {
       position: "bottom-center",
       theme: "dark",
     });
     setPopup(false);
   }
   function handleNo() {
-    toast.success("Entry is not deleted, Thank you", {
+    toast.warn("Entry is not deleted, Thank you", {
       position: "bottom-center",
+      theme:"dark"
     });
     setPopup(false);
   }
